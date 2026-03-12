@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Regression Analyser</title>
+</head>
+<body>
+    <h2>Upload CSV File</h2>
+    
+        <input type="file" id="fileInput">
+        <button  onclick="uploadFile()">Upload</button>
+    
+
+    <p id="result"></p>
+    <img id="graph" width="500">
+
+    <script>
+        async function uploadFile(){
+            let file=document.getElementById("fileInput").files[0];
+            const formData=new FormData();
+            formData.append("file",file);
+
+            const response=await fetch("http://127.0.0.1:5000/upload",{method:"POST",body:formData});
+            const blob = await response.blob()
+            const imageURL = URL.createObjectURL(blob)
+
+            let result=document.getElementById("result");
+            let graph=document.getElementById("graph");
+
+            
+            graph.src=imageURL;
+        }
+    </script>
+    
+</body>
+</html>
