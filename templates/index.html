@@ -7,8 +7,22 @@
 </head>
 <body>
     <h2>Upload CSV File</h2>
-    
+        <label for="fileInput">Add CSV file:</label>
         <input type="file" id="fileInput">
+        <br>
+        <br>
+
+        <label for="weight">Add value of weight(w):</label>
+        <input type="number" id="weight">
+        <br>
+        <br>
+
+        <label for="bias">Add value of bias(b):</label>
+        <input type="number" id="bias">
+        <br>
+        <br>
+
+
         <button  onclick="uploadFile()">Upload</button>
     
 
@@ -18,8 +32,12 @@
     <script>
         async function uploadFile(){
             let file=document.getElementById("fileInput").files[0];
+            let w=document.getElementById("weight").value;
+            let b=document.getElementById("bias").value;
             const formData=new FormData();
             formData.append("file",file);
+            formData.append("weight",w);
+            formData.append("bias",b);
 
             const response=await fetch("http://127.0.0.1:5000/upload",{method:"POST",body:formData});
             const blob = await response.blob()
