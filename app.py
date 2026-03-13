@@ -10,7 +10,7 @@ def home():
 
 @app.route("/plots/<filename>")
 def serve_plot(filename):
-    return send_from_directory("tmp/plots", filename)
+    return send_from_directory("/tmp/plots", filename)
 
 
 UPLOAD_FOLDER="uploads"

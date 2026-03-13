@@ -90,7 +90,7 @@ def run_regression(file_path,weight,bias,alpha,iterations):
     idx = np.argsort(X)
     plt.plot(X[idx], compute_fwb(X[idx],w_final,b_final),color='red')
     plt.title(f"Final Cost = {j_history[-1]:.2f}")
-    regression_path = "tmp/plots/regression.png"
+    regression_path = "/tmp/plots/regression.png"
     plt.savefig(regression_path)
     plt.close()
 
@@ -101,7 +101,7 @@ def run_regression(file_path,weight,bias,alpha,iterations):
     plt.title("Cost vs Iterations")
     plt.xlabel("Iterations")
     plt.ylabel("Cost")
-    cost_path = "tmp/plots/cost.png"
+    cost_path = "/tmp/plots/cost.png"
     plt.savefig(cost_path)
     plt.close()
 
