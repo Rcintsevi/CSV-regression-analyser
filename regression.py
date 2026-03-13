@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 
 def compute_fwb(X,w,b):
@@ -63,6 +64,8 @@ def r2_score(y,y_pred):
 
 def run_regression(file_path,weight,bias,alpha,iterations):
 
+    os.makedirs("/tmp/plots", exist_ok=True)
+
     df=pd.read_csv(file_path)
     preview = df.head().to_dict(orient="records")
     columns = list(df.columns)
@@ -87,7 +90,7 @@ def run_regression(file_path,weight,bias,alpha,iterations):
     idx = np.argsort(X)
     plt.plot(X[idx], compute_fwb(X[idx],w_final,b_final),color='red')
     plt.title(f"Final Cost = {j_history[-1]:.2f}")
-    regression_path = "plots/regression.png"
+    regression_path = "tmp/plots/regression.png"
     plt.savefig(regression_path)
     plt.close()
 
@@ -98,7 +101,7 @@ def run_regression(file_path,weight,bias,alpha,iterations):
     plt.title("Cost vs Iterations")
     plt.xlabel("Iterations")
     plt.ylabel("Cost")
-    cost_path = "plots/cost.png"
+    cost_path = "tmp/plots/cost.png"
     plt.savefig(cost_path)
     plt.close()
 
