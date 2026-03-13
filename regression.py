@@ -53,13 +53,19 @@ def gradient_descent(X,y,w_in,b_in,alpha,iterations,compute_cost,compute_gradien
         p_history.append([w,b])
     return w,b,j_history,p_history
 
-
+def r2_score(y,y_pred):
+    mean=np.mean(y)
+    ss_res=np.sum((y-y_pred)**2)
+    ss_tot=np.sum((y-mean)**2)
+    return 1-(ss_res/ss_tot)
 
 
 
 def run_regression(file_path,weight,bias,alpha,iterations):
 
     df=pd.read_csv(file_path)
+    preview = df.head().to_dict(orient="records")
+    columns = list(df.columns)
 
     X = df.iloc[:,0].values
     y = df.iloc[:,1].values
@@ -71,27 +77,40 @@ def run_regression(file_path,weight,bias,alpha,iterations):
 
     fwb=compute_fwb(X,w_final,b_final)
     cost=compute_cost(fwb,y)
+    r2=r2_score(y,fwb)
 
-    plt.figure(figsize=(10,4))
+    
 
     # Regression plot
-    plt.subplot(1,2,1)
+    plt.figure(figsize=(8,6))
     plt.scatter(X,y)
-    plt.plot(X,compute_fwb(X,w_final,b_final),color='red')
+    idx = np.argsort(X)
+    plt.plot(X[idx], compute_fwb(X[idx],w_final,b_final),color='red')
     plt.title(f"Final Cost = {j_history[-1]:.2f}")
-    plt.xlabel("X")
-    plt.ylabel("Y")
+    regression_path = "plots/regression.png"
+    plt.savefig(regression_path)
+    plt.close()
+
 
     # Cost vs iterations
-    plt.subplot(1,2,2)
+    plt.figure(figsize=(8,6))
     plt.plot(j_history)
     plt.title("Cost vs Iterations")
     plt.xlabel("Iterations")
     plt.ylabel("Cost")
-
-    plot_path = "plots/output.png"
-    plt.savefig(plot_path)
+    cost_path = "plots/cost.png"
+    plt.savefig(cost_path)
     plt.close()
-    return plot_path
+
+    return {
+        "regression_plot": regression_path,
+        "cost_plot": cost_path,
+        "w":w_final,
+        "b":b_final,
+        "cost":j_history[-1],
+        "r2":r2,
+        "preview": preview,
+        "columns": columns
+    }
 
 

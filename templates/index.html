@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSV Regression Analyser</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     <h2>Upload CSV File</h2>
@@ -37,32 +38,40 @@
     
 
     <p id="result"></p>
-    <img id="graph" width="500">
+    <div class="plots">
+        <img id="regression" width="500">
+        <img id="cost" width="500">
+        
+    </div>
 
-    <script>
-        async function uploadFile(){
-            let file=document.getElementById("fileInput").files[0];
-            let w=document.getElementById("weight").value;
-            let b=document.getElementById("bias").value;
-            let alpha=document.getElementById("alpha").value;
-            let i=document.getElementById("iterations").value;
-            const formData=new FormData();
-            formData.append("file",file);
-            formData.append("weight",w);
-            formData.append("bias",b);
-            formData.append("alpha",alpha);
-            formData.append("iterations",i);
+    <h3>Dataset Preview</h3>
+    <table id="datasetPreview" border="1"></table>
 
-            const response=await fetch("http://127.0.0.1:5000/upload",{method:"POST",body:formData});
-            const blob = await response.blob()
-            const imageURL = URL.createObjectURL(blob)
+    <div id="results">
+        <p id="wFinal"></p>
+        <p id="bFinal"></p>
+        <p id="costFinal"></p>
+        <p id="r2"></p>
 
-            let result=document.getElementById("result");
-            let graph=document.getElementById("graph");
+    </div>
 
-            
-            graph.src=imageURL;
-        }
+    <h3>Experiment History</h3>
+    <table id="history" border="1">
+    <tr>
+    <th>α</th>
+    <th>Iterations</th>
+    <th>Init w</th>
+    <th>Init b</th>
+    <th>Final w</th>
+    <th>Final b</th>
+    <th>Cost</th>
+    <th>R²</th>
+    </tr>
+    </table>
+    
+
+    <script src="../static/index.js">
+        
     </script>
     
 </body>

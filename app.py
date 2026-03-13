@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template
+from flask import Flask, request, send_file, render_template,jsonify,send_from_directory
 import os
 from regression import run_regression
 
@@ -7,6 +7,10 @@ app=Flask(__name__)
 @app.route("/")
 def home():
     return render_template("index.html")
+
+@app.route("/plots/<filename>")
+def serve_plot(filename):
+    return send_from_directory("plots", filename)
 
 
 UPLOAD_FOLDER="uploads"
@@ -28,9 +32,9 @@ def upload():
 
     file.save(path)
 
-    plot_path=run_regression(path,weight,bias,alpha,iterations)
+    result=run_regression(path,weight,bias,alpha,iterations)
 
-    return send_file(plot_path, mimetype="image/png")
+    return jsonify(result)
 
 if __name__=="__main__":
     app.run(debug=True)
