@@ -19,8 +19,8 @@ async function uploadFile(){
             const response=await fetch("/upload",{method:"POST",body:formData});
             const data = await response.json();
 
-            document.getElementById("regression").src = "/"+ data.regression_plot;
-            document.getElementById("cost").src = "/"+data.cost_plot;
+            document.getElementById("regression").src = "/plots/"+ data.regression_plot;
+            document.getElementById("cost").src = "/plots/"+data.cost_plot;
             w_f.innerText="Final weight: "+data.w;
             b_f.innerText="Final bias: "+data.b;
             cost_f.innerText="Final cost: "+data.cost;

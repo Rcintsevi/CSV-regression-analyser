@@ -106,8 +106,8 @@ def run_regression(file_path,weight,bias,alpha,iterations):
     plt.close()
 
     return {
-        "regression_plot": regression_path,
-        "cost_plot": cost_path,
+        "regression_plot": "regression.png",
+        "cost_plot": "cost.png",
         "w":w_final,
         "b":b_final,
         "cost":j_history[-1],
