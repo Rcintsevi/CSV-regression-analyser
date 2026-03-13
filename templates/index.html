@@ -22,6 +22,16 @@
         <br>
         <br>
 
+        <label for="alpha">Add value of learning rate(&#945;):</label>
+        <input type="number" id="alpha">
+        <br>
+        <br>
+
+        <label for="iterations">Add No. of iterations</label>
+        <input type="number" id="iterations">
+        <br>
+        <br>
+
 
         <button  onclick="uploadFile()">Upload</button>
     
@@ -34,10 +44,14 @@
             let file=document.getElementById("fileInput").files[0];
             let w=document.getElementById("weight").value;
             let b=document.getElementById("bias").value;
+            let alpha=document.getElementById("alpha").value;
+            let i=document.getElementById("iterations").value;
             const formData=new FormData();
             formData.append("file",file);
             formData.append("weight",w);
             formData.append("bias",b);
+            formData.append("alpha",alpha);
+            formData.append("iterations",i);
 
             const response=await fetch("http://127.0.0.1:5000/upload",{method:"POST",body:formData});
             const blob = await response.blob()

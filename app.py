@@ -22,11 +22,13 @@ def upload():
     file=request.files["file"]
     weight=float(request.form["weight"])
     bias=float(request.form["bias"])
+    alpha=float(request.form["alpha"])
+    iterations=int(request.form["iterations"])
     path=os.path.join(UPLOAD_FOLDER,file.filename)
 
     file.save(path)
 
-    plot_path=run_regression(path,weight,bias)
+    plot_path=run_regression(path,weight,bias,alpha,iterations)
 
     return send_file(plot_path, mimetype="image/png")
 
