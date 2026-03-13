@@ -16,7 +16,7 @@ async function uploadFile(){
             formData.append("alpha",alpha);
             formData.append("iterations",i);
 
-            const response=await fetch("http://127.0.0.1:5000/upload",{method:"POST",body:formData});
+            const response=await fetch("/upload",{method:"POST",body:formData});
             const data = await response.json();
 
             document.getElementById("regression").src = "/"+ data.regression_plot;
